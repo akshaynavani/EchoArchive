@@ -1,0 +1,67 @@
+spring:
+  application:
+    name: echoarchive
+  profiles:
+    default: onprem
+  servlet:
+    multipart:
+      max-file-size: ${ECHO_MAX_MESSAGE_BYTES:5MB}
+      max-request-size: 6MB
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/echoarchive}
+    username: ${DB_USERNAME:echo}
+    password: ${DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      acks: all
+      retries: 10
+      compression-type: lz4
+      properties:
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 5
+        max.request.size: 6291456
+        delivery.timeout.ms: 120000
+    consumer:
+      group-id: echoarchive-persister
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      properties:
+        max.partition.fetch.bytes: 6291456
+        isolation.level: read_committed
+    listener:
+      ack-mode: record
+
+echoarchive:
+  topics:
+    media-messages: media.messages
+    recording-chunks: recording.chunks
+    media-persisted: media.persisted
+    partitions: ${ECHO_TOPIC_PARTITIONS:6}
+    replication-factor: ${ECHO_TOPIC_REPLICATION:1}
+  storage:
+    bucket: ${S3_BUCKET:echoarchive-media}
+    region: ${AWS_REGION:us-east-1}
+    create-bucket-if-missing: false
+  ingest:
+    max-message-bytes: 5242880
+    max-chunk-bytes: 1048576
+    multipart-part-bytes: 5242880
+  retrieval:
+    presign-ttl: PT15M
+    stale-upload-after: PT2H
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized

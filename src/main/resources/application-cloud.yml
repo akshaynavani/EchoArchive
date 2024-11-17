@@ -1,0 +1,8 @@
+# AWS deployment: real S3, credentials from the default provider chain
+# (instance profile / IRSA / env vars). No endpoint override.
+echoarchive:
+  storage:
+    path-style-access: false
+    create-bucket-if-missing: false
+  topics:
+    replication-factor: ${ECHO_TOPIC_REPLICATION:3}

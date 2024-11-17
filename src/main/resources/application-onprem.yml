@@ -1,0 +1,8 @@
+# On-prem deployment: S3-compatible store (MinIO) inside the agency network.
+echoarchive:
+  storage:
+    endpoint: ${S3_ENDPOINT:http://localhost:9000}
+    path-style-access: true
+    access-key: ${S3_ACCESS_KEY:}
+    secret-key: ${S3_SECRET_KEY:}
+    create-bucket-if-missing: true
