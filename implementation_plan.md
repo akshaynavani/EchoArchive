@@ -40,7 +40,8 @@ RecordingChunkEvent, MediaPersistedEvent), `src/main/resources/application.yml`,
 ## Phase 2 — Ingestion API and Kafka producers
 Deliverables: REST endpoints for multimedia messages (multipart upload) and call-recording chunk
 streaming (start / append chunk / finish), validation, Kafka topic + producer config, error handling.
-Files: `config/KafkaTopicConfig.java`, `config/KafkaProducerConfig.java`,
+Files: `config/KafkaTopicConfig.java`, `config/KafkaProducerConfig.java`, `metadata/RecordingSession*` (needed
+by ingest to enforce chunk ordering; `V1__recording_session.sql`),
 `ingest/MediaIngestController.java`, `ingest/RecordingIngestController.java`,
 `ingest/IngestService.java`, `ingest/dto/*`, `api/GlobalExceptionHandler.java`,
 `util/Checksums.java`.
