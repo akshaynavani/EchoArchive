@@ -73,7 +73,7 @@ public class RecordingAssembler {
 
     @Transactional
     public void accept(RecordingChunkEvent event) {
-        RecordingSession session = sessions.findById(event.recordingId())
+        RecordingSession session = sessions.findForUpdate(event.recordingId())
                 .orElseThrow(() -> new NonRetryableMediaException(
                         "Chunk for unknown recording " + event.recordingId()));
 

@@ -106,7 +106,7 @@ public class IngestService {
                 ? UUID.randomUUID().toString()
                 : req.recordingId();
 
-        return sessions.findById(recordingId)
+        return sessions.findForUpdate(recordingId)
                 .map(existing -> {
                     if (!existing.getIncidentId().equals(req.incidentId())
                             || !existing.getCallId().equals(req.callId())) {
@@ -198,7 +198,7 @@ public class IngestService {
     }
 
     private RecordingSession load(String recordingId) {
-        return sessions.findById(recordingId)
+        return sessions.findForUpdate(recordingId)
                 .orElseThrow(() -> new NotFoundException("Unknown recording " + recordingId));
     }
 
