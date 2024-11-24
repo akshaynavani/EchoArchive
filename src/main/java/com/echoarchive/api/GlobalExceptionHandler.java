@@ -8,9 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
@@ -35,7 +37,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({BadRequestException.class, ConstraintViolationException.class,
-            MissingServletRequestParameterException.class, MissingServletRequestPartException.class})
+            ServletRequestBindingException.class, MissingServletRequestPartException.class,
+            MethodArgumentTypeMismatchException.class, HandlerMethodValidationException.class})
     public ResponseEntity<ApiError> badRequest(Exception e, HttpServletRequest req) {
         return build(HttpStatus.BAD_REQUEST, e.getMessage(), req);
     }
