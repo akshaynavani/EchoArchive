@@ -26,14 +26,14 @@ spring:
       properties:
         enable.idempotence: true
         max.in.flight.requests.per.connection: 5
-        max.request.size: 6291456
+        max.request.size: 8388608
         delivery.timeout.ms: 120000
     consumer:
       group-id: echoarchive-persister
       auto-offset-reset: earliest
       enable-auto-commit: false
       properties:
-        max.partition.fetch.bytes: 6291456
+        max.partition.fetch.bytes: 8388608
         isolation.level: read_committed
     listener:
       ack-mode: record
