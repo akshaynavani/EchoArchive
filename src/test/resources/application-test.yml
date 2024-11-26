@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:echoarchive;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  flyway:
+    enabled: true
+
+echoarchive:
+  storage:
+    create-bucket-if-missing: false
+  maintenance:
+    reaper-initial-delay: PT1H
