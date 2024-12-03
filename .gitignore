@@ -1,0 +1,23 @@
+# Build output
+target/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Environment / secrets
+.env
+*.env
+!.env.example
+
+# Logs & OS
+*.log
+logs/
+.DS_Store
